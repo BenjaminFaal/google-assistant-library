@@ -1,3 +1,10 @@
+lib/
+dist/
+refresh_token
+client_secret.json
+
+.idea/
+
 # Logs
 logs
 *.log
