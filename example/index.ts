@@ -1,6 +1,9 @@
 import Assistant from "../src/Assistant";
 import getAccessToken from "./credentials";
 import Event, {EventType} from "../src/Event";
+import playSound from 'play-sound';
+
+const player = playSound({});
 
 const config = require('./config.json');
 
@@ -21,6 +24,12 @@ getAccessToken().then(response => {
             if (text === 'stop' || text === 'exit') {
                 process.exit(0);
             }
+        }
+
+        if (event.type === EventType.ON_CONVERSATION_TURN_STARTED) {
+            player.play('resources/start.wav');
+        } else if (event.type === EventType.ON_CONVERSATION_TURN_FINISHED) {
+            player.play('resources/stop.wav');
         }
     });
 
