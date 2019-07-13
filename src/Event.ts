@@ -1,8 +1,8 @@
 export default class Event {
     type: EventType;
-    args: object;
+    args: any;
 
-    constructor(type: EventType, args: object) {
+    constructor(type: EventType, args: any) {
         this.type = type;
         this.args = args;
     }

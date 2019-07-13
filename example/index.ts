@@ -5,7 +5,7 @@ import Event, {EventType} from "../src/Event";
 const config = require('./config.json');
 
 getAccessToken().then(response => {
-    var assistant = new Assistant(config.deviceModelId);
+    var assistant = new Assistant('lib/libassistant_embedder.so', config.deviceModelId);
     assistant.setAccessToken(response.token);
     return assistant;
 }).then(assistant => {
@@ -14,6 +14,13 @@ getAccessToken().then(response => {
 
         if (event.type === EventType.ON_START_FINISHED) {
             assistant.sendTextQuery('what time is it');
+        }
+
+        if (event.type === EventType.ON_RECOGNIZING_SPEECH_FINISHED) {
+            var text = event.args.text;
+            if (text === 'stop' || text === 'exit') {
+                process.exit(0);
+            }
         }
     });
 

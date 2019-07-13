@@ -2,7 +2,7 @@ import {GetAccessTokenResponse} from "google-auth-library/build/src/auth/oauth2c
 import {JWTInput, OAuth2Client, UserRefreshClient} from "google-auth-library";
 import * as fs from "fs";
 
-const {installed: {client_id, client_secret}} = require('../client_secret.json');
+const {installed: {client_id, client_secret}} = require('./client_secret.json');
 const REFRESH_TOKEN_FILE = './refresh_token';
 
 async function getAuthorizationCode(oAuth2Client): Promise<string> {

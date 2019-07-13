@@ -1,0 +1,9 @@
+{
+  "name": "google-assistant-library-example",
+  "scripts": {
+    "start": "ts-node index.ts"
+  },
+  "dependencies": {
+    "google-assistant-library": "../"
+  }
+}

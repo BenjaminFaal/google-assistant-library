@@ -3,8 +3,7 @@
   "version": "0.0.1",
   "main": "index.ts",
   "scripts": {
-    "build": "tsc",
-    "start": "ts-node example/index.ts"
+    "build": "tsc"
   },
   "dependencies": {
     "ffi": "^2.3.0",
