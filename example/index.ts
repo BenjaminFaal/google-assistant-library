@@ -35,7 +35,5 @@ getAccessToken().then(response => {
 
     assistant.start();
 
-    assistant.startConversation();
-
     process.openStdin().on('data', (data) => assistant.sendTextQuery(data.toString().trim()));
 });
