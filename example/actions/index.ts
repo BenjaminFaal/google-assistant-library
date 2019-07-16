@@ -45,11 +45,13 @@ export default class Actions {
         }
         fs.chmodSync(gactionsCliFile, '775');
 
+        console.log('Updating ActionPackage: ' + actionPackage.getName());
         var actionPackageJsonFile = this.getFile(actionPackage);
         fs.writeFileSync(actionPackageJsonFile, actionPackage.toJSON());
 
         var command = gactionsCliFile + ' test --action_package ' + actionPackageJsonFile + ' --project ' + projectId;
         execSync(command, {stdio: 'inherit'});
+        console.log('Updated ActionPackage: ' + actionPackage.getName());
     }
 
 }
