@@ -1,11 +1,10 @@
 import Assistant from "../src/Assistant";
 import getAccessToken from "./credentials";
 import Event, {EventType} from "../src/Event";
-import playSound from 'play-sound';
+import Speaker from 'speaker';
+import fs from 'fs';
 import path from 'path';
 import Actions from './actions';
-
-const player = playSound({});
 
 const config = require('./config.json');
 
@@ -16,6 +15,10 @@ actionPackages.forEach(actionPackage => {
         Actions.updateActionPackage(actionPackage, config.projectId, gactionsCliFile);
     }
 });
+
+function playSound(file: string) {
+    fs.createReadStream(file).pipe(new Speaker());
+}
 
 getAccessToken().then(response => {
     var assistant = new Assistant('lib/libassistant_embedder.so', config.deviceModelId);
@@ -37,9 +40,9 @@ getAccessToken().then(response => {
         }
 
         if (event.type === EventType.ON_CONVERSATION_TURN_STARTED) {
-            player.play('resources/start.wav');
+            playSound('resources/start.wav');
         } else if (event.type === EventType.ON_CONVERSATION_TURN_FINISHED) {
-            player.play('resources/stop.wav');
+            playSound('resources/stop.wav');
         }
 
         if (event.type === EventType.ON_DEVICE_ACTION) {
