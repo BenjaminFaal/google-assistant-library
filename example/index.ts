@@ -29,7 +29,7 @@ getAccessToken().then(response => {
         console.log('Assistant event:', EventType[event.type], event.args);
 
         if (event.type === EventType.ON_START_FINISHED) {
-            assistant.sendTextQuery('what time is it');
+            assistant.sendTextQuery('say google assistant library is awesome!');
         }
 
         if (event.type === EventType.ON_RECOGNIZING_SPEECH_FINISHED) {
