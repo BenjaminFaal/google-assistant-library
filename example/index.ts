@@ -12,7 +12,9 @@ const config = require('./config.json');
 var gactionsCliFile = path.resolve('resources', 'gactions');
 var actionPackages = Actions.loadActionPackages('actions');
 actionPackages.forEach(actionPackage => {
-    Actions.updateActionPackage(actionPackage, config.projectId, gactionsCliFile);
+    if (!Actions.isUpToDate(actionPackage)) {
+        Actions.updateActionPackage(actionPackage, config.projectId, gactionsCliFile);
+    }
 });
 
 getAccessToken().then(response => {

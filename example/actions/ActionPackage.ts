@@ -84,7 +84,7 @@ export default abstract class ActionPackage {
     }
 
     public getName(): string {
-        return this.name;
+        return this.namespace + '.' + this.name;
     }
 
     public getNamespace(): string {
@@ -162,6 +162,10 @@ export default abstract class ActionPackage {
             }),
             types: this.types
         };
+    }
+
+    toJSON(): string {
+        return JSON.stringify(this.toObject());
     }
 
 }

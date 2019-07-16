@@ -1,8 +1,14 @@
 import ActionPackage from "./ActionPackage";
 import fs from "fs";
 import path from "path";
-import tmp from 'tmp';
+import {tmpdir} from 'tmp';
 import {execSync} from 'child_process';
+import md5 from "md5";
+
+const actionsDir = path.join(tmpdir, 'actions');
+if (!fs.existsSync(actionsDir)) {
+    fs.mkdirSync(actionsDir);
+}
 
 export default class Actions {
 
@@ -17,17 +23,28 @@ export default class Actions {
         });
     }
 
+    private static getFile(actionPackage: ActionPackage): string {
+        return path.join(actionsDir, actionPackage.getName() + '.json');
+    }
+
+    static isUpToDate(actionPackage: ActionPackage) {
+        var jsonFile = this.getFile(actionPackage);
+        if (!fs.existsSync(jsonFile)) {
+            return false;
+        }
+        return md5(actionPackage.toJSON()) === md5(fs.readFileSync(jsonFile));
+    }
+
     static updateActionPackage(actionPackage: ActionPackage, projectId: string, gactionsCliFile: string) {
         if (!fs.existsSync(gactionsCliFile)) {
             throw new Error(gactionsCliFile + ' does not exist, please download the gactions-cli from https://developers.google.com/actions/tools/gactions-cli#downloads first');
         }
         fs.chmodSync(gactionsCliFile, '775');
 
-        var actionPackageJsonFile = tmp.fileSync({prefix: 'google-assistant-library-example-action-' + actionPackage.getName()});
-        var actionPackageJson = JSON.stringify(actionPackage.toObject());
-        fs.writeFileSync(actionPackageJsonFile.name, actionPackageJson);
+        var actionPackageJsonFile = this.getFile(actionPackage);
+        fs.writeFileSync(actionPackageJsonFile, actionPackage.toJSON());
 
-        var command = gactionsCliFile + ' test --action_package ' + actionPackageJsonFile.name + ' --project ' + projectId;
+        var command = gactionsCliFile + ' test --action_package ' + actionPackageJsonFile + ' --project ' + projectId;
         execSync(command, {stdio: 'inherit'});
     }
 
