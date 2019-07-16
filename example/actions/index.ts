@@ -10,15 +10,19 @@ if (!fs.existsSync(actionsDir)) {
     fs.mkdirSync(actionsDir);
 }
 
+const actionsConfig = require('../config.json')['actions'];
+
 export default class Actions {
 
     static loadActionPackages(dir: string): ActionPackage[] {
         return fs.readdirSync(dir, {withFileTypes: true}).filter(file => file.isDirectory()).map(actionDir => {
-            console.log('Loading ActionPackage: ' + actionDir.name);
-            var actionPackageClass = require(path.resolve(dir, actionDir.name));
+            var name = actionDir.name;
+            console.log('Loading ActionPackage: ' + name);
+            var actionPackageClass = require(path.resolve(dir, name));
 
             var actionPackage: ActionPackage = new actionPackageClass.default();
-            console.log('Loaded ActionPackage: ' + actionPackage.getName());
+            actionPackage.initialize(actionsConfig[name] || {});
+            console.log('Loaded ActionPackage: ' + name);
             return actionPackage;
         });
     }
