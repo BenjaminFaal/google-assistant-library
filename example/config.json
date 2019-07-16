@@ -3,7 +3,8 @@
   "deviceModelId": "assistant-library-example",
   "actions": {
     "youtube": {
-      "apiKey": ""
+      "apiKey": "",
+      "maxResults": 10
     }
   }
 }
