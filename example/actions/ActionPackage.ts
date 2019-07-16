@@ -83,6 +83,8 @@ export default abstract class ActionPackage {
         this.types = [];
     }
 
+    public abstract initialize(config: any)
+
     public getName(): string {
         return this.namespace + '.' + this.name;
     }

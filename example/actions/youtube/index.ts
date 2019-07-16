@@ -11,8 +11,28 @@ export default class YouTube extends ActionPackage {
             [{name: 'query', type: 'SchemaOrg_Text'}],
             ['Playing $query on YouTube'],
             params => {
-                console.log('Playing ' + params.query + ' on YouTube!!!');
             });
+
+        this.addCommand(
+            'Pause',
+            ['pause youtube'],
+            [],
+            ['Pausing YouTube'],
+            params => {
+            }
+        );
+
+        this.addCommand(
+            'Stop',
+            ['stop youtube'],
+            [],
+            ['Stopping YouTube'],
+            params => {
+            }
+        );
+    }
+
+    initialize(config: any) {
     }
 
 }

@@ -48,6 +48,7 @@ getAccessToken().then(response => {
                     command.execution.forEach(execution => {
                         actionPackages.forEach(actionPackage => {
                             if (actionPackage.hasCommand(execution.command)) {
+                                console.log('Executing command: ', execution);
                                 actionPackage.handleCommand(execution.command, execution.params);
                             }
                         });

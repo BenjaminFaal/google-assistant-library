@@ -1,4 +1,9 @@
 {
   "projectId": "assistant-library-example",
-  "deviceModelId": "assistant-library-example"
+  "deviceModelId": "assistant-library-example",
+  "actions": {
+    "youtube": {
+      "apiKey": ""
+    }
+  }
 }
